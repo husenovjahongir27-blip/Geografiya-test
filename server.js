@@ -38,7 +38,7 @@ app.get('/api/telegram-test', async (req, res) => {
     if (!me.ok) return res.status(502).json({ ok:false, step:'getMe', error:me.description, http:me.http });
     const sent = await telegram('sendMessage', {
       chat_id: CHAT,
-      text: '✅ Geografiya Test Dasturi: Telegram ulanishi muvaffaqiyatli ishlayapti.'
+      text: '✅ Maktab Test Dasturi: Telegram ulanishi muvaffaqiyatli ishlayapti.'
     });
     if (!sent.ok) return res.status(502).json({ ok:false, step:'sendMessage', bot:me.result.username, error:sent.description, http:sent.http });
     res.json({ ok:true, bot:me.result.username, chat_id:CHAT });
@@ -52,8 +52,8 @@ app.post('/api/result', async (req, res) => {
     const x = req.body;
     if (!x.student || !x.details) return res.status(400).json({ ok:false, error:'Natija ma’lumotlari to‘liq emas.' });
 
-    let m = '📝 GEOGRAFIYA TEST NATIJASI\n\n';
-    m += `👨‍🎓 O‘quvchi: ${clean(x.student)}\n🔢 Jami: ${x.total} ta\n✅ To‘g‘ri: ${x.correct} ta\n❌ Xato: ${x.wrong} ta\n📊 Foiz: ${x.percent}%\n🏆 Baho: ${x.grade}\n\n📋 Savollar:\n`;
+    let m = '📝 MAKTAB TEST NATIJASI\n\n';
+    m += `👨‍🎓 O‘quvchi: ${clean(x.student)}\n📚 Fan: ${clean(x.subject || 'Ko‘rsatilmagan')}\n🔢 Jami: ${x.total} ta\n✅ To‘g‘ri: ${x.correct} ta\n❌ Xato: ${x.wrong} ta\n📊 Foiz: ${x.percent}%\n🏆 Baho: ${x.grade}\n\n📋 Savollar:\n`;
     for (const d of x.details) {
       m += `${d.isCorrect ? '✅' : '❌'} ${d.number}. ${clean(d.userAnswer)}`;
       if (!d.isCorrect) m += ` → ${clean(d.correctAnswer)}`;
