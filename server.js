@@ -15,6 +15,9 @@ if (!TOKEN || !CHAT) {
 app.use(express.json({ limit: '100kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 const clean = s => String(s).replace(/[\r\n]+/g, ' ').trim();
 
 async function telegram(method, body) {
