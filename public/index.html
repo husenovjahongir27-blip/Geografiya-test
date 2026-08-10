@@ -53,10 +53,31 @@ function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()
 function render(){let q=qs[idx];$("num").textContent="Savol "+(idx+1)+"/"+qs.length;$("q").textContent=q[0];$("opts").innerHTML="";
 q[1].forEach((v,j)=>{let b=document.createElement("button");b.className="opt "+(answers[idx]===j?"chosen":"");b.textContent=String.fromCharCode(65+j)+") "+v;b.onclick=()=>{answers[idx]=j;render()};$("opts").appendChild(b)});
 $("next").textContent=idx===qs.length-1?"🏁 Yakunlash":"Keyingi →"}
-function start(){if(!$("name").value.trim())return alert("F.I.Sh. kiriting");
-let b=(BANK[$("grade").value]||{})[$("subject").value];if(!b)return alert("Fan tanlang.");
-b=b.map(x=>[x[0],[...x[1]],x[2]]);shuffle(b);qs=b.slice(0,+$("count").value);answers=Array(qs.length).fill(null);idx=0;seconds=Number($("#time").value)*60;
-$("setup").classList.add("hidden");$("test").classList.remove("hidden");timer=setInterval(tick,1000);render()}
+function start(){
+  if(!$("#name").value.trim()) return alert("F.I.Sh. kiriting!");
+
+  let b=(BANK[$("#grade").value]||{})[$("#subject").value];
+
+  if(!b) return alert("Fan tanlang.");
+
+  b=b.map(x=>[x[0],[...x[1]],x[2]]);
+  shuffle(b);
+
+  qs=b.slice(0,+$("#count").value);
+  answers=Array(qs.length).fill(null);
+  idx=0;
+
+  seconds=Number($("#time").value)*60;
+
+  clearInterval(timer);
+
+  $("#setup").classList.add("hidden");
+  $("#test").classList.remove("hidden");
+
+  timer=setInterval(tick,1000);
+
+  render();
+}
 function tick(){seconds--;let m=Math.floor(Math.max(seconds,0)/60),s=Math.max(seconds,0)%60;$("timer").textContent="⏱ "+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");if(seconds<=0)finish()}
 function prev(){if(idx>0){idx--;render()}}
 function next(){if(answers[idx]===null)return alert("Avval javobni belgilang.");if(idx<qs.length-1){idx++;render()}else finish()}
