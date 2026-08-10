@@ -6,8 +6,6 @@ const PORT=Number(process.env.PORT||3000);
 const TOKEN=(process.env.BOT_TOKEN||"").trim();
 const CHAT=(process.env.CHAT_ID||"").trim();
 app.use(express.json({limit:"200kb"}));
-app.use(express.static(path.join(__dirname,"public")));
-app.get("/",(req,res)=>res.sendFile(path.join(__dirname,"public","index.html")));
 const clean=s=>String(s??"").replace(/[\r\n]+/g," ").trim();
 async function telegram(method,body){
  const r=await fetch(`https://api.telegram.org/bot${TOKEN}/${method}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
