@@ -67,16 +67,16 @@ function start(){
   answers=Array(qs.length).fill(null);
   idx=0;
 
-  seconds=Number($("#time").value)*60;
+ seconds=Number(document.getElementById("time")?.value || 10)*60;
 
-  clearInterval(timer);
+clearInterval(timer);
 
-  $("#setup").classList.add("hidden");
-  $("#test").classList.remove("hidden");
+$("#setup").classList.add("hidden");
+$("#test").classList.remove("hidden");
 
-  timer=setInterval(tick,1000);
+timer=setInterval(tick,1000);
 
-  render();
+render();
 }
 function tick(){seconds--;let m=Math.floor(Math.max(seconds,0)/60),s=Math.max(seconds,0)%60;$("timer").textContent="⏱ "+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");if(seconds<=0)finish()}
 function prev(){if(idx>0){idx--;render()}}
