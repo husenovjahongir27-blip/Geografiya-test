@@ -21,6 +21,18 @@ button{padding:12px 18px;border:0;border-radius:9px;background:#075b78;color:#ff
 <div><label>🏫 Sinf</label><select id="grade"></select></div>
 <div><label>📚 Fan</label><select id="subject"></select></div>
 <div><label>📝 Test soni</label><select id="count"><option>10</option><option>15</option><option>20</option><option>25</option><option selected>30</option></select></div>
+<div>
+  <label>⏱️ Vaqt</label>
+  <select id="time">
+    <option value="5">5 daqiqa</option>
+    <option value="10" selected>10 daqiqa</option>
+    <option value="15">15 daqiqa</option>
+    <option value="20">20 daqiqa</option>
+    <option value="30">30 daqiqa</option>
+    <option value="45">45 daqiqa</option>
+    <option value="60">60 daqiqa</option>
+  </select>
+</div>
 </div><p id="hint">Avval sinfni tanlang.</p><button onclick="start()">🚀 Boshlash</button></section>
 
 <section id="test" class="card hidden"><div><b id="num"></b><span style="float:right" id="timer"></span></div>
@@ -43,7 +55,7 @@ q[1].forEach((v,j)=>{let b=document.createElement("button");b.className="opt "+(
 $("next").textContent=idx===qs.length-1?"🏁 Yakunlash":"Keyingi →"}
 function start(){if(!$("name").value.trim())return alert("F.I.Sh. kiriting");
 let b=(BANK[$("grade").value]||{})[$("subject").value];if(!b)return alert("Fan tanlang.");
-b=b.map(x=>[x[0],[...x[1]],x[2]]);shuffle(b);qs=b.slice(0,+$("count").value);answers=Array(qs.length).fill(null);idx=0;seconds=qs.length*90;
+b=b.map(x=>[x[0],[...x[1]],x[2]]);shuffle(b);qs=b.slice(0,+$("count").value);answers=Array(qs.length).fill(null);idx=0;seconds=Number($("#time").value)*60;
 $("setup").classList.add("hidden");$("test").classList.remove("hidden");timer=setInterval(tick,1000);render()}
 function tick(){seconds--;let m=Math.floor(Math.max(seconds,0)/60),s=Math.max(seconds,0)%60;$("timer").textContent="⏱ "+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");if(seconds<=0)finish()}
 function prev(){if(idx>0){idx--;render()}}
