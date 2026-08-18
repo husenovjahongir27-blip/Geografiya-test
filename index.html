@@ -114,8 +114,20 @@ function start(){
     return;
   }
 
-  let pool=source.map(x=>[x[0],[...x[1]],x[2]]);
-  shuffle(pool);
+let pool=source.map(x=>{
+  const options=x[1].map((text,index)=>({text,index}));
+  shuffle(options);
+
+  const correctIndex=options.findIndex(o=>o.index===x[2]);
+
+  return [
+    x[0],
+    options.map(o=>o.text),
+    correctIndex
+  ];
+});
+
+shuffle(pool);
 
   qs=pool.slice(0,Math.min(count,pool.length));
   answers=Array(qs.length).fill(null);
